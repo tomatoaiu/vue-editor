@@ -1,9 +1,9 @@
-# Vue-Parcel-Pack
+# Vue-Editor
 template vue and parcel
 ## Usage
 ```
-git clone https://github.com/tomatoaiu/vue-parcel-pack.git
-cd vue-parcel-pack
+git clone https://github.com/tomatoaiu/vue-editor.git
+cd vue-editor
 npm i
 npm run start      #access http://localhost:1234
 ```

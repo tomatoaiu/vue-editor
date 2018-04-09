@@ -1,15 +1,15 @@
 <template>
 <div>
-    {{word}}
+    <editorList></editorList>
 </div>
 </template>
 
 <script>
+import EditorList from "./components/editor-list"
 export default {
-    data(){
-        return {
-            word: "Hello, world",
-        }
+    name: "App",
+    components : {
+        editorList : EditorList
     }
 }
 </script>
