@@ -1,6 +1,6 @@
 <template>
 <div>
-    <b-button @click="addEditorFromUi()">new editor +</b-button>
+    <!-- <b-button @click="addEditorFromUi()">new editor +</b-button> -->
     <b-tabs>
         <b-tab v-for="({id, content, changeContent}, index) of editorItems"
             :key="index"
@@ -10,6 +10,13 @@
                 class="ace-editor">
             </editor>
         </b-tab>
+        <b-nav-item slot="tabs" @click.prevent="addEditorFromUi()" href="#">
+          +
+        </b-nav-item>
+        <div slot="empty" class="text-center text-muted">
+          There are no open tabs
+          <br> Open a new tab using + button.
+        </div>
     </b-tabs>
 </div>  
 </template>
