@@ -15,7 +15,8 @@
 
 <script>
 import EditorList from "./components/editor-list"
-import Tree from "./components/tree.vue";
+import Tree from "./components/tree.vue"
+
 export default {
     name: "App",
     components : {
