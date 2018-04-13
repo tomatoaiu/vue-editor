@@ -1,7 +1,8 @@
 <template>
 <div>
     <div :id="id"
-        style="width: 100%; height: 100%;">
+        style="width: 100%; height: 100%;"
+        class="editor-style">
     </div>
 </div>  
 </template>
@@ -29,3 +30,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.editor-style {
+  margin-top: 5px;
+}
+</style>
