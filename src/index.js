@@ -10,6 +10,13 @@ import './lib/ace/src-min-noconflict/ext-language_tools'
 import './lib/ace/src-min-noconflict/ext-modelist'
 import './lib/ace/src-min-noconflict/theme-monokai'
 
+import fontawesome from '@fortawesome/fontawesome'
+import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+import solid from '@fortawesome/fontawesome-free-solid'
+
+fontawesome.library.add(solid)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(BootstrapVue)
 Vue.use(Vuex)
 
