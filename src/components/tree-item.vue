@@ -1,19 +1,35 @@
 <template>
 <div>
-  <li>
+  <li class="tree-item">
     <div
       :class="{bold: isFolder}"
       @click.left="clickedItem({name: model.name})"
       >
-      {{ model.name }}
-      <b-dropdown variant="link" size="sm" no-caret>
-        <template slot="button-content">
-          &#x1f50d;<span class="sr-only">Search</span>
-        </template>
-        <b-dropdown-item-button href="#">Open</b-dropdown-item-button>
-        <b-dropdown-item-button href="#" @click.prevent="showModal = !showModal">Set Name</b-dropdown-item-button>
-      </b-dropdown>
-      <span v-if="isFolder">[{{ open ? '-' : '+' }}]</span>
+      <b-row>
+        <b-col md="1" xl="2" cols="12" class="tree-item-icon">
+          <span v-if="isFolder">
+            <div v-if="open">
+              <font-awesome-icon :icon="['fas', 'folder-open']" />
+            </div>
+            <div v-else>
+              <font-awesome-icon :icon="['fas', 'folder']" />
+            </div>
+          </span>
+          <span v-else>
+            <font-awesome-icon :icon="['fas', 'file']" />
+          </span>          
+        </b-col>
+        <b-col md="11" xl="10" cols="12" class="tree-item-text">
+          {{ model.name }}
+          <b-dropdown variant="link" size="sm" no-caret>
+            <template slot="button-content">
+              &#x1f50d;<span class="sr-only">Search</span>
+            </template>
+            <b-dropdown-item-button href="#">Open</b-dropdown-item-button>
+            <b-dropdown-item-button href="#" @click.prevent="showModal = !showModal">Set Name</b-dropdown-item-button>
+          </b-dropdown>
+        </b-col>
+      </b-row>
     </div>
     <ul v-show="open" v-if="isFolder">
       <tree-item
@@ -129,6 +145,21 @@ ul {
   padding-left: 1em;
   line-height: 1.5em;
   list-style-type: dot;
+}
+
+.tree-item{
+  list-style: none;
+}
+
+.tree-item-icon{
+  padding: 0;
+  padding-left: 5px;
+  line-height: 30px;
+}
+
+.tree-item-text{
+  padding: 0;
+  margin-left: -12px;
 }
 </style>
 
