@@ -16,6 +16,9 @@ const state = {
 const actions = {
   addEditor({commit}, payload){
     commit("ADD_EDITOR", payload)
+  },
+  changeId({commit}, payload){
+    commit("CHANGE_ID", payload)
   }
 }
 
@@ -26,6 +29,14 @@ const mutations = {
       content: payload.content,
       changeContent: value => this.content = value
     })
+  },
+  CHANGE_ID(state, payload) {
+    let item = state.editorItems.find(({id}) => {
+      return id === payload.id
+    })
+    if(item){
+      item.id = payload.setId
+    }
   }
 }
 

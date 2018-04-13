@@ -1,9 +1,9 @@
 <template>
 <div>
-    <treeItem
-        class="item"
-        :model="treeData">
-    </treeItem>
+  <treeItem
+    class="item"
+    :model="treeData">
+   </treeItem>
 </div>
 </template>
 
@@ -36,12 +36,12 @@ export default {
           }
         ]
       }
-    }
+    };
   },
   components: {
     treeItem: TreeItem
   }
-}
+};
 </script>
 
 <style scoped>

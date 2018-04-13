@@ -3,9 +3,16 @@
   <li>
     <div
       :class="{bold: isFolder}"
-      @click="clickedItem({name: model.name})"
-      @dblclick="changeType">
+      @click.left="clickedItem({name: model.name})"
+      >
       {{ model.name }}
+      <b-dropdown variant="link" size="sm" no-caret>
+        <template slot="button-content">
+          &#x1f50d;<span class="sr-only">Search</span>
+        </template>
+        <b-dropdown-item-button href="#">Open</b-dropdown-item-button>
+        <b-dropdown-item-button href="#" @click.prevent="showModal = !showModal">Set Name</b-dropdown-item-button>
+      </b-dropdown>
       <span v-if="isFolder">[{{ open ? '-' : '+' }}]</span>
     </div>
     <ul v-show="open" v-if="isFolder">
@@ -18,6 +25,30 @@
       <li class="add" @click="addChild">+</li>
     </ul>
   </li>
+  <b-modal 
+    v-model="showModal"
+    title="Set Name"
+    @shown="clearName">
+    <p>{{model.name}}</p>
+    <b-container fluid>
+      <b-form-input 
+        type="text"
+        placeholder="Enter File or Folder name"
+        v-model="name">
+      </b-form-input>
+    </b-container>
+    <div slot="modal-footer" class="w-100">
+      <div class="float-right">
+        <b-btn size="sm" variant="secondary" @click="showModal=false">
+          Close
+        </b-btn>
+        <b-btn size="sm" variant="primary" 
+          @click="changeEditorId({id: model.name, setId: name})">
+          Set
+        </b-btn>
+      </div>
+    </div>
+  </b-modal>
 </div>
 </template>
 
@@ -33,7 +64,9 @@ export default {
   },
   data() {
     return {
-      open: false
+      open: false,
+      showModal: false,
+      name: "",
     }
   },
   computed: {
@@ -45,11 +78,19 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["addEditor"]),
+    ...mapActions(["addEditor", "changeId"]),
     addEditorFromUi({name = "test"} = {}) {
       if(this.isFile){
         this.addEditor({ id: name, content: "" })
       }
+    },
+    changeEditorId({id = "", setId = ""} ={}) {
+      this.changeId({id, setId})
+      this.clearName()
+      this.showModal = false
+    },
+    clearName () {
+      this.name = ""
     },
     clickedItem({name = "test"} = {}){
       this.toggle()
