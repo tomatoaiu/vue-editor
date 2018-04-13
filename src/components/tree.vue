@@ -30,7 +30,17 @@ export default {
               { name: "up.rust" },
               {
                 name: "config",
-                children: [{ name: "ace.vue" }, { name: "sunday.py" }]
+                children: [
+                  { name: "ace.vue" },
+                  { name: "sunday.py" },
+                  {name: "counter",
+                  children:[{
+                    name: "counter-item",
+                    children: [{
+                      name: "counter-item-header"
+                    }]
+                  }]}
+                ]
               }
             ]
           }
