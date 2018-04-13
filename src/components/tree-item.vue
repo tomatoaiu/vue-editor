@@ -4,9 +4,9 @@
     <div
       :class="{bold: isFolder}"
       @click.left="clickedItem({name: model.name})"
-      >
-      <b-row>
-        <b-col md="1" xl="2" cols="12" class="tree-item-icon">
+      @contextmenu.prevent="$refs.ctxMenu.open">
+      <div class="tree-item-line">
+        <div class="tree-item-line-icon">
           <span v-if="isFolder">
             <div v-if="open">
               <font-awesome-icon :icon="['fas', 'folder-open']" />
@@ -18,18 +18,11 @@
           <span v-else>
             <font-awesome-icon :icon="['fas', 'file']" />
           </span>          
-        </b-col>
-        <b-col md="11" xl="10" cols="12" class="tree-item-text">
-          {{ model.name }}
-          <b-dropdown variant="link" size="sm" no-caret>
-            <template slot="button-content">
-              &#x1f50d;<span class="sr-only">Search</span>
-            </template>
-            <b-dropdown-item-button href="#">Open</b-dropdown-item-button>
-            <b-dropdown-item-button href="#" @click.prevent="showModal = !showModal">Set Name</b-dropdown-item-button>
-          </b-dropdown>
-        </b-col>
-      </b-row>
+        </div>
+        <div class="tree-item-line-text">
+          {{model.name}}
+        </div>
+      </div>
     </div>
     <ul v-show="open" v-if="isFolder">
       <tree-item
@@ -65,11 +58,18 @@
       </div>
     </div>
   </b-modal>
+
+  <context-menu id="context-menu" ref="ctxMenu">
+    <li @click="showModal = !showModal">Set Name</li>
+    <li class="disabled">option 2</li>
+    <li>option 3</li>
+  </context-menu>
 </div>
 </template>
 
 <script>
 import Vue from "vue/dist/vue.esm.js"
+import ContextMenu from 'vue-context-menu'
 import { createNamespacedHelpers } from "vuex"
 const { mapActions } = createNamespacedHelpers("editor")
 
@@ -117,6 +117,9 @@ export default {
         this.open = !this.open
       }
     },
+    showDropDown(){
+      this.$root.$emit("bv::dropdown::shown")
+    },
     changeType() {
       if (!this.isFolder) {
         Vue.set(this.model, "children", [])
@@ -129,6 +132,9 @@ export default {
         name: "new stuff"
       })
     }
+  },
+  components:{
+    'context-menu' : ContextMenu 
   }
 }
 </script>
@@ -137,6 +143,7 @@ export default {
 .item {
   font-family: Menlo, Consolas, monospace;
   cursor: pointer;
+  width: 300px;
 }
 .bold {
   font-weight: bold;
@@ -149,17 +156,32 @@ ul {
 
 .tree-item{
   list-style: none;
+  width: 300px;
 }
 
-.tree-item-icon{
+.tree-item-line{
+  width: 100%;
+  position: relative;
+  height: 25px;
+}
+
+.tree-item-line-icon{
+  position: absolute;
   padding: 0;
   padding-left: 5px;
-  line-height: 30px;
+  line-height: 25px;
+  top: 0;
+  left: 0;
+  margin: 0;
 }
 
-.tree-item-text{
+.tree-item-line-text{
+  position: absolute;
+  overflow: hidden;
   padding: 0;
-  margin-left: -12px;
+  margin: 0;
+  top: 0;
+  left: 18px;
 }
 </style>
 
