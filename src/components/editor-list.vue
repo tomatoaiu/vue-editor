@@ -22,40 +22,36 @@
 </template>
 
 <script>
-import Editor from "./editor.vue";
-import { createNamespacedHelpers } from 'vuex'
+import Editor from "./editor.vue"
+import { createNamespacedHelpers } from "vuex"
 const { mapGetters, mapActions } = createNamespacedHelpers("editor")
 
 export default {
   name: "editor-list",
-  data(){
+  data() {
     return {
       idCount: 0
-    }
+    };
   },
   computed: {
-    ...mapGetters([
-      "editorItems"
-    ])
+    ...mapGetters(["editorItems"])
   },
   methods: {
-    ...mapActions([
-      "addEditor"
-    ]),
-    addEditorFromUi(){
-      this.addEditor({id: `editor${this.idCount++}`, content: ""})
+    ...mapActions(["addEditor"]),
+    addEditorFromUi() {
+      this.addEditor({ id: `editor${this.idCount++}`, content: "" })
     }
   },
   components: {
     editor: Editor
-  },
+  }
 };
 </script>
 
 <style scoped>
-.ace-editor{
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
+.ace-editor {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 </style>
