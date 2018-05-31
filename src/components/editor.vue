@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import { ace } from '../load-brace'
+
 export default {
   data() {
     return {
@@ -17,16 +19,26 @@ export default {
   },
   props: ["id", "content", "lang", "theme"],
   mounted() {
-    const lang = this.lang || "html"
-    const theme = this.theme || "monokai"
+    let lang
+    if(this.lang) {
+      const reg = /(.*)(?:\.([^.]+$))/
+      lang = this.lang.match(reg)[2] || 'text'
+    } else {
+      lang = 'text'
+    }
+    const theme = this.theme || 'chrome'
 
-    this.editor = window.ace.edit(this.id)
+    this.editor = ace.edit(this.id)
     this.editor.setValue(this.content, 1)
 
-    let modelist = window.ace.require("ace/ext/modelist")
-    let mode = modelist.getModeForPath(lang).mode
-    this.editor.session.setMode(mode)
+    this.editor.getSession().setMode(`ace/mode/${lang}`)
     this.editor.setTheme(`ace/theme/${theme}`)
+
+    this.editor.setOptions({
+      enableBasicAutocomplation: true,
+      enableSnippets: true,
+      enableLiveAutocompletion: true
+    })
   }
 };
 </script>

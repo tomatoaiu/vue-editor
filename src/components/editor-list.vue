@@ -6,6 +6,7 @@
             :key="index"
             v-bind:title="id">
             <editor v-bind:id="id"
+            :lang='id'
                 v-bind:content="content"
                 class="ace-editor">
             </editor>
